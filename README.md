@@ -1,1 +1,1 @@
-# nhk-easy-service-go
+# nhk-easy-service-go [![Go Report Card](https://goreportcard.com/badge/github.com/nhk-news-web-easy/nhk-easy-service-go)](https://goreportcard.com/report/github.com/nhk-news-web-easy/nhk-easy-service-go)
