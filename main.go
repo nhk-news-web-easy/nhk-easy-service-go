@@ -1,4 +1,4 @@
-package nhk_easy_service_go
+package main
 
 import (
 	"context"
