@@ -1,10 +1,10 @@
 image: Visual Studio 2022
 environment:
   matrix:
-    - GO: "C:\go113"
-    - GO: "C:\go112"
-    - GO: "C:\go111"
-    - GO: "C:\go110"
+    - GO: "C:\\go113"
+    - GO: "C:\\go112"
+    - GO: "C:\\go111"
+    - GO: "C:\\go110"
 build: off
 install:
   - "%GO%\\go.exe mod download"
