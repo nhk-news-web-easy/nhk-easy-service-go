@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
+func grpcHandler(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
 	return h2c.NewHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.ProtoMajor == 2 && strings.Contains(r.Header.Get("Content-Type"), "application/grpc") {
 			grpcServer.ServeHTTP(w, r)
@@ -38,6 +38,6 @@ func NewHttpServer(endpoint string, grpcServer *grpc.Server) *http.Server {
 
 	return &http.Server{
 		Addr:    endpoint,
-		Handler: grpcHandlerFunc(grpcServer, httpMux),
+		Handler: grpcHandler(grpcServer, httpMux),
 	}
 }
