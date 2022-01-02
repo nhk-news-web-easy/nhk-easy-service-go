@@ -1,10 +1,10 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"github.com/nhk-news-web-easy/nhk-easy-service-go/gateway"
+	"github.com/nhk-news-web-easy/nhk-easy-service-go/server"
 	pb "github.com/nhk-news-web-easy/nhk-easy-service-proto"
 	"google.golang.org/grpc"
 	"log"
@@ -12,19 +12,8 @@ import (
 )
 
 var (
-	port = flag.Int("port", 5000, "The server port")
+	port = flag.Int("port", 8080, "The server port")
 )
-
-type server struct {
-	pb.UnimplementedNhkServiceServer
-}
-
-func (server *server) GetNews(context context.Context, request *pb.NewsRequest) (*pb.NewsReply, error) {
-	return &pb.NewsReply{
-		Error: nil,
-		News:  nil,
-	}, nil
-}
 
 func main() {
 	flag.Parse()
@@ -36,10 +25,10 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	s := grpc.NewServer()
-	pb.RegisterNhkServiceServer(s, &server{})
+	grpcServer := grpc.NewServer()
+	pb.RegisterNhkServiceServer(grpcServer, &server.GrpcServer{})
 
-	httpServer := gateway.NewHttpServer(address, s)
+	httpServer := gateway.NewHttpServer(address, grpcServer)
 
 	log.Printf("server listening at %v", listener.Addr())
 
