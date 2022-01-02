@@ -39,7 +39,7 @@ func main() {
 	s := grpc.NewServer()
 	pb.RegisterNhkServiceServer(s, &server{})
 
-	httpServer := gateway.ProvideHTTP(address, s)
+	httpServer := gateway.NewHttpServer(address, s)
 
 	if err = httpServer.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)

@@ -23,7 +23,7 @@ func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Ha
 	}), &http2.Server{})
 }
 
-func ProvideHTTP(endpoint string, grpcServer *grpc.Server) *http.Server {
+func NewHttpServer(endpoint string, grpcServer *grpc.Server) *http.Server {
 	ctx := context.Background()
 	//获取证书
 
