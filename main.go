@@ -40,6 +40,8 @@ func main() {
 	pb.RegisterNhkServiceServer(s, &server{})
 
 	httpServer := gateway.NewHttpServer(address, s)
+	
+	log.Printf("server listening at %v", listener.Addr())
 
 	if err = httpServer.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)
