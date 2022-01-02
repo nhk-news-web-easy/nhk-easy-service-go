@@ -25,25 +25,19 @@ func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Ha
 
 func NewHttpServer(endpoint string, grpcServer *grpc.Server) *http.Server {
 	ctx := context.Background()
-	//获取证书
+	dialOption := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
+	gatewayMux := runtime.NewServeMux()
+	err := pb.RegisterNhkServiceHandlerFromEndpoint(ctx, gatewayMux, endpoint, dialOption)
 
-	//添加证书
-	dopts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	//新建gwmux，它是grpc-gateway的请求复用器。它将http请求与模式匹配，并调用相应的处理程序。
-	gwmux := runtime.NewServeMux()
-	//将服务的http处理程序注册到gwmux。处理程序通过endpoint转发请求到grpc端点
-	err := pb.RegisterNhkServiceHandlerFromEndpoint(ctx, gwmux, endpoint, dopts)
 	if err != nil {
-		log.Fatalf("Register Endpoint err: %v", err)
+		log.Fatalf("failed to register endpoint: %v", err)
 	}
-	//新建mux，它是http的请求复用器
-	mux := http.NewServeMux()
-	//注册gwmux
-	mux.Handle("/", gwmux)
-	//注册swagger
-	log.Println(endpoint + " HTTP.Listing whth TLS and token...")
+
+	httpMux := http.NewServeMux()
+	httpMux.Handle("/", gatewayMux)
+
 	return &http.Server{
 		Addr:    endpoint,
-		Handler: grpcHandlerFunc(grpcServer, mux),
+		Handler: grpcHandlerFunc(grpcServer, httpMux),
 	}
 }
