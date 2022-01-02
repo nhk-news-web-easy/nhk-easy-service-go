@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/nhk-news-web-easy/nhk-easy-service-go/gateway"
 	pb "github.com/nhk-news-web-easy/nhk-easy-service-proto"
 	"google.golang.org/grpc"
 	"log"
@@ -28,7 +29,8 @@ func (server *server) GetNews(context context.Context, request *pb.NewsRequest) 
 func main() {
 	flag.Parse()
 
-	listener, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
+	address := fmt.Sprintf("localhost:%d", *port)
+	listener, err := net.Listen("tcp", address)
 
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -37,9 +39,9 @@ func main() {
 	s := grpc.NewServer()
 	pb.RegisterNhkServiceServer(s, &server{})
 
-	log.Printf("server listening at %v", listener.Addr())
+	httpServer := gateway.ProvideHTTP(address, s)
 
-	if err := s.Serve(listener); err != nil {
+	if err = httpServer.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
 }
