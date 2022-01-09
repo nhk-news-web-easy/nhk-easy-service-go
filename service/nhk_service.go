@@ -28,6 +28,8 @@ func GetNews() ([]model.News, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		newsList = append(newsList, news)
 	}
 
 	if err = rows.Err(); err != nil {
