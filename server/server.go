@@ -39,10 +39,7 @@ func (server *GrpcServer) GetNews(context context.Context, request *pb.NewsReque
 			Url:             n.Url,
 			M3U8Url:         n.M3u8Url,
 			ImageUrl:        n.ImageUrl,
-			PublishedAtUtc: &timestamppb.Timestamp{
-				Seconds: int64(n.PublishedAtUtc.Second()),
-				Nanos:   int32(n.PublishedAtUtc.Nanosecond()),
-			},
+			PublishedAtUtc:  timestamppb.New(n.PublishedAtUtc),
 		}
 	}
 
