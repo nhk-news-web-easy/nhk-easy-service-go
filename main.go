@@ -13,7 +13,12 @@ import (
 )
 
 var (
-	port = flag.Int("port", 8080, "The server port")
+	port         = flag.Int("port", 8080, "The server port")
+	dbDriverName = flag.String("dbDriverName", "mysql", "The driver name of database")
+	dbUserName   = flag.String("dbUserName", "root", "The user name of database")
+	dbPassword   = flag.String("dbPassword", "123456", "The password of database")
+	dbHost       = flag.String("dbHost", "127.0.0.1", "The host of database")
+	dbPort       = flag.Int("dbPort", 3306, "The port of database")
 )
 
 func main() {
@@ -33,7 +38,14 @@ func main() {
 
 	log.Printf("server listening at %v", listener.Addr())
 
-	err = db.InitDb()
+	dbConfig := db.DbConfig{
+		DriverName: *dbDriverName,
+		UserName:   *dbUserName,
+		Password:   *dbPassword,
+		Host:       *dbHost,
+		Port:       *dbPort,
+	}
+	err = db.InitDb(dbConfig)
 
 	if err != nil {
 		log.Fatalf("failed to init db %v", err)

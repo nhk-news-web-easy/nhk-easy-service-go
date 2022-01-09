@@ -3,13 +3,14 @@ package db
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 )
 
 var db *sql.DB
 
-func InitDb() error {
+func InitDb(config DbConfig) error {
 	var err error
-	db, err = sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/nhk?parseTime=true")
+	db, err = sql.Open(config.DriverName, fmt.Sprintf("%s:%s@tcp(%s:%d)/nhk?parseTime=true", config.UserName, config.Password, config.Host, config.Port))
 
 	if err != nil {
 		return err
