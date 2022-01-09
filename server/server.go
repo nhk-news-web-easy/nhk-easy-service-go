@@ -5,6 +5,7 @@ import (
 	"github.com/nhk-news-web-easy/nhk-easy-service-go/service"
 	pb "github.com/nhk-news-web-easy/nhk-easy-service-proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
+	"log"
 )
 
 type GrpcServer struct {
@@ -15,10 +16,12 @@ func (server *GrpcServer) GetNews(context context.Context, request *pb.NewsReque
 	news, err := service.GetNews()
 
 	if err != nil {
+		log.Printf("failed to get news %v", err)
+
 		return &pb.NewsReply{
 			Error: &pb.Error{
 				Code:    500,
-				Message: err.Error(),
+				Message: "internal server error",
 			},
 			News: nil,
 		}, nil
