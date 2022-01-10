@@ -132,8 +132,10 @@ github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+o
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220102085110-04ff8da18879 h1:pnUMEntC6WYX46XBLROdPd8jwfRf0sAipxmq2fmybc0=
-github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220102085110-04ff8da18879/go.mod h1:vap5/z/XdUy4o9IG3toULbCCiE+muShg8JdwCmdtJQg=
+github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220109140224-bb9795468212 h1:WMvt2Iglh32h8V1DgXehCTH6dAj7VOnAGWsve1LMy48=
+github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220109140224-bb9795468212/go.mod h1:vap5/z/XdUy4o9IG3toULbCCiE+muShg8JdwCmdtJQg=
+github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220110114501-329b3ce76e89 h1:s00mixHWwOgMSxErbMgL220c8q4dgGjDVDQQaDRcPoI=
+github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220110114501-329b3ce76e89/go.mod h1:vap5/z/XdUy4o9IG3toULbCCiE+muShg8JdwCmdtJQg=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=

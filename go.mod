@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.2
-	github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220102085110-04ff8da18879
+	github.com/nhk-news-web-easy/nhk-easy-service-proto v0.0.0-20220110114501-329b3ce76e89
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 	google.golang.org/grpc v1.43.0
 	google.golang.org/protobuf v1.27.1
