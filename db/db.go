@@ -27,10 +27,10 @@ func CloseDb() error {
 	return db.Close()
 }
 
-func Query(query string) (*sql.Rows, error) {
+func Query(query string, args ...interface{}) (*sql.Rows, error) {
 	if db == nil {
 		return nil, errors.New("database is not initialized")
 	}
 
-	return db.Query(query)
+	return db.Query(query, args...)
 }

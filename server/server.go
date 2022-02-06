@@ -13,7 +13,7 @@ type GrpcServer struct {
 }
 
 func (server *GrpcServer) GetNews(context context.Context, request *pb.NewsRequest) (*pb.NewsReply, error) {
-	news, err := service.GetNews()
+	news, err := service.GetNews(request.StartDate, request.EndDate)
 
 	if err != nil {
 		log.Printf("failed to get news %v", err)
