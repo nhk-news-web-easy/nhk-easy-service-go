@@ -3,11 +3,13 @@ package gateway
 import (
 	"context"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/nhk-news-web-easy/nhk-easy-service-go/marshaler"
 	pb "github.com/nhk-news-web-easy/nhk-easy-service-proto"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/encoding/protojson"
 	"log"
 	"net/http"
 	"strings"
@@ -26,7 +28,15 @@ func grpcHandler(grpcServer *grpc.Server, otherHandler http.Handler) http.Handle
 func NewHttpServer(endpoint string, grpcServer *grpc.Server) *http.Server {
 	ctx := context.Background()
 	dialOption := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	gatewayMux := runtime.NewServeMux()
+	gatewayMux := runtime.NewServeMux(runtime.WithMarshalerOption(runtime.MIMEWildcard, &marshaler.CustomMarshaler{
+		runtime.JSONPb{
+			MarshalOptions: protojson.MarshalOptions{
+				AllowPartial:    true,
+				UseEnumNumbers:  true,
+				EmitUnpopulated: true,
+			},
+		},
+	}))
 	err := pb.RegisterNhkServiceHandlerFromEndpoint(ctx, gatewayMux, endpoint, dialOption)
 
 	if err != nil {
