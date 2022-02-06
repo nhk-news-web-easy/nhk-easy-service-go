@@ -28,8 +28,8 @@ func grpcHandler(grpcServer *grpc.Server, otherHandler http.Handler) http.Handle
 func NewHttpServer(endpoint string, grpcServer *grpc.Server) *http.Server {
 	ctx := context.Background()
 	dialOption := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	gatewayMux := runtime.NewServeMux(runtime.WithMarshalerOption(runtime.MIMEWildcard, &marshaler.CustomMarshaler{
-		runtime.JSONPb{
+	gatewayMux := runtime.NewServeMux(runtime.WithMarshalerOption(runtime.MIMEWildcard, &marshaler.NewsReplyMarshaler{
+		JSONPb: runtime.JSONPb{
 			MarshalOptions: protojson.MarshalOptions{
 				AllowPartial:    true,
 				UseEnumNumbers:  true,

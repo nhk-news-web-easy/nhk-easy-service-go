@@ -24,14 +24,14 @@ var (
 	protoMessageType = reflect.TypeOf((*proto.Message)(nil)).Elem()
 )
 
-type CustomMarshaler struct {
+type NewsReplyMarshaler struct {
 	runtime.JSONPb
 }
 
-func (customMarshaler *CustomMarshaler) Marshal(v interface{}) ([]byte, error) {
+func (newsReplyMarshaler *NewsReplyMarshaler) Marshal(v interface{}) ([]byte, error) {
 	if newsReply, ok := v.(*nhk_service.NewsReply); ok {
 		var buf bytes.Buffer
-		if err := customMarshaler.marshalTo(&buf, newsReply.News); err != nil {
+		if err := newsReplyMarshaler.marshalTo(&buf, newsReply.News); err != nil {
 			return nil, err
 		}
 		return buf.Bytes(), nil
@@ -45,7 +45,7 @@ func (customMarshaler *CustomMarshaler) Marshal(v interface{}) ([]byte, error) {
 // it is only capable of marshaling non-message field values of protobuf,
 // i.e. primitive types, enums; pointers to primitives or enums; maps from
 // integer/string types to primitives/enums/pointers to messages.
-func (customMarshaler *CustomMarshaler) marshalNonProtoField(v interface{}) ([]byte, error) {
+func (newsReplyMarshaler *NewsReplyMarshaler) marshalNonProtoField(v interface{}) ([]byte, error) {
 	if v == nil {
 		return []byte("null"), nil
 	}
@@ -59,7 +59,7 @@ func (customMarshaler *CustomMarshaler) marshalNonProtoField(v interface{}) ([]b
 
 	if rv.Kind() == reflect.Slice {
 		if rv.IsNil() {
-			if customMarshaler.EmitUnpopulated {
+			if newsReplyMarshaler.EmitUnpopulated {
 				return []byte("[]"), nil
 			}
 			return []byte("null"), nil
@@ -78,7 +78,7 @@ func (customMarshaler *CustomMarshaler) marshalNonProtoField(v interface{}) ([]b
 						return nil, err
 					}
 				}
-				if err = customMarshaler.marshalTo(&buf, rv.Index(i).Interface().(proto.Message)); err != nil {
+				if err = newsReplyMarshaler.marshalTo(&buf, rv.Index(i).Interface().(proto.Message)); err != nil {
 					return nil, err
 				}
 			}
@@ -103,7 +103,7 @@ func (customMarshaler *CustomMarshaler) marshalNonProtoField(v interface{}) ([]b
 						return nil, err
 					}
 				}
-				if customMarshaler.UseEnumNumbers {
+				if newsReplyMarshaler.UseEnumNumbers {
 					_, err = buf.WriteString(strconv.FormatInt(rv.Index(i).Int(), 10))
 				} else {
 					_, err = buf.WriteString("\"" + rv.Index(i).Interface().(protoEnum).String() + "\"")
@@ -124,34 +124,34 @@ func (customMarshaler *CustomMarshaler) marshalNonProtoField(v interface{}) ([]b
 	if rv.Kind() == reflect.Map {
 		m := make(map[string]*json.RawMessage)
 		for _, k := range rv.MapKeys() {
-			buf, err := customMarshaler.Marshal(rv.MapIndex(k).Interface())
+			buf, err := newsReplyMarshaler.Marshal(rv.MapIndex(k).Interface())
 			if err != nil {
 				return nil, err
 			}
 			m[fmt.Sprintf("%v", k.Interface())] = (*json.RawMessage)(&buf)
 		}
-		if customMarshaler.Indent != "" {
-			return json.MarshalIndent(m, "", customMarshaler.Indent)
+		if newsReplyMarshaler.Indent != "" {
+			return json.MarshalIndent(m, "", newsReplyMarshaler.Indent)
 		}
 		return json.Marshal(m)
 	}
-	if enum, ok := rv.Interface().(protoEnum); ok && !customMarshaler.UseEnumNumbers {
+	if enum, ok := rv.Interface().(protoEnum); ok && !newsReplyMarshaler.UseEnumNumbers {
 		return json.Marshal(enum.String())
 	}
 	return json.Marshal(rv.Interface())
 }
 
-func (customMarshaler *CustomMarshaler) marshalTo(w io.Writer, v interface{}) error {
+func (newsReplyMarshaler *NewsReplyMarshaler) marshalTo(w io.Writer, v interface{}) error {
 	p, ok := v.(proto.Message)
 	if !ok {
-		buf, err := customMarshaler.marshalNonProtoField(v)
+		buf, err := newsReplyMarshaler.marshalNonProtoField(v)
 		if err != nil {
 			return err
 		}
 		_, err = w.Write(buf)
 		return err
 	}
-	b, err := customMarshaler.MarshalOptions.Marshal(p)
+	b, err := newsReplyMarshaler.MarshalOptions.Marshal(p)
 	if err != nil {
 		return err
 	}
