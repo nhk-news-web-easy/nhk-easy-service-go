@@ -28,7 +28,7 @@ type NewsMarshaler struct {
 	runtime.JSONPb
 }
 
-// Serialize the NewsReply.News field only
+// Serialize the NewsReply.News field only for backward compatibility
 func (newsMarshaler *NewsMarshaler) Marshal(v interface{}) ([]byte, error) {
 	if newsReply, ok := v.(*nhk_service.NewsReply); ok {
 		var buf bytes.Buffer
