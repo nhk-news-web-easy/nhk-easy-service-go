@@ -28,6 +28,7 @@ type NewsReplyMarshaler struct {
 	runtime.JSONPb
 }
 
+// Serialize the NewsReply.News field only
 func (newsReplyMarshaler *NewsReplyMarshaler) Marshal(v interface{}) ([]byte, error) {
 	if newsReply, ok := v.(*nhk_service.NewsReply); ok {
 		var buf bytes.Buffer
@@ -40,6 +41,7 @@ func (newsReplyMarshaler *NewsReplyMarshaler) Marshal(v interface{}) ([]byte, er
 	}
 }
 
+// borrowed from marshal_jsonpb.go
 // marshalNonProto marshals a non-message field of a protobuf message.
 // This function does not correctly marshal arbitrary data structures into JSON,
 // it is only capable of marshaling non-message field values of protobuf,
@@ -141,6 +143,7 @@ func (newsReplyMarshaler *NewsReplyMarshaler) marshalNonProtoField(v interface{}
 	return json.Marshal(rv.Interface())
 }
 
+// borrowed from marshal_jsonpb.go
 func (newsReplyMarshaler *NewsReplyMarshaler) marshalTo(w io.Writer, v interface{}) error {
 	p, ok := v.(proto.Message)
 	if !ok {
