@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/nhk-news-web-easy/nhk-easy-service-go/db"
 	"github.com/nhk-news-web-easy/nhk-easy-service-go/model"
 	"google.golang.org/protobuf/types/known/timestamppb"
