@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	thirtyDays = float64(24 * 30)
+	thirtyDaysInHours = float64(24 * 30)
 )
 
 func GetNews(startDate *timestamppb.Timestamp, endDate *timestamppb.Timestamp) ([]model.News, error) {
@@ -24,7 +24,7 @@ func GetNews(startDate *timestamppb.Timestamp, endDate *timestamppb.Timestamp) (
 		return nil, errors.New("startDate should be less than endDate")
 	}
 
-	if endTime.Sub(startTime).Hours() > thirtyDays {
+	if endTime.Sub(startTime).Hours() > thirtyDaysInHours {
 		return nil, errors.New("time range is too large")
 	}
 
